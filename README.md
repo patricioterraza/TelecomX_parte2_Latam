@@ -1,59 +1,64 @@
-# Análisis y Predicción de Cancelación de Clientes (Churn) 📈📉
+# Análisis y Predicción de Cancelación de Clientes (Churn) 📈
 
-## Resumen del Proyecto 📝
+## 🚀 Propósito del Análisis
 
-Este proyecto tiene como objetivo principal identificar los factores clave que influyen en la cancelación de clientes (churn) y desarrollar modelos predictivos para anticipar este comportamiento. A través de un análisis exploratorio de datos, preparación de la base de datos y la construcción de modelos de Machine Learning, hemos logrado extraer información valiosa para proponer estrategias de retención efectivas.
-
----
-
-## Tareas Realizadas ✅
-
-A continuación se detallan las principales etapas y tareas completadas en este proyecto:
-
-### 1. Exploración y Preparación de Datos 📊🧹
-
-* **Análisis Inicial:** Se cargó el conjunto de datos `df_tratados.csv`, que contiene información detallada sobre los clientes y sus servicios.
-* **Manejo de Datos:** Se identificaron y trataron los valores no numéricos en la columna `charges.total`, rellenando los valores faltantes con 0 para asegurar la compatibilidad con los modelos numéricos.
-* **Correlación de Variables:**
-    * Se calculó y visualizó una matriz de correlación para entender las relaciones entre todas las variables numéricas.
-    * Se prestó especial atención a las variables con mayor correlación con la variable objetivo `churn`. Se identificaron `tenure`, `contract_month-to-month` y la ausencia de servicios de seguridad como los principales factores de influencia.
+El objetivo principal de este proyecto es **predecir la cancelación (churn) de clientes** utilizando un conjunto de datos histórico. A través de un análisis exhaustivo, buscamos identificar los **factores más relevantes** que influyen en la decisión de un cliente de irse. La meta es proporcionar a la empresa información valiosa para desarrollar estrategias de retención proactivas y efectivas.
 
 ---
 
-### 2. Preprocesamiento para el Modelado ⚙️🔬
+## 📂 Estructura del Proyecto
 
-* **Identificación de Desbalance de Clases:** Se verificó que el conjunto de datos estaba significativamente desbalanceado, con la clase 'No Churn' (0) siendo la mayoría y la clase 'Churn' (1) la minoría.
-* **División de Datos:** El conjunto de datos se dividió en un 70% para entrenamiento y un 30% para prueba. Se utilizó la estrategia de `stratify=y` para garantizar que la proporción de clases se mantuviera en ambos conjuntos.
-* **Manejo de Desbalance con Undersampling:** Para abordar el desbalance de clases, se aplicó la técnica de `NearMiss` **exclusivamente al conjunto de entrenamiento**. Esta técnica redujo el número de instancias de la clase mayoritaria para igualar el tamaño de la clase minoritaria, preparando así un conjunto de datos equilibrado para el entrenamiento.
+La estructura del proyecto está organizada de la siguiente manera:
 
----
-
-### 3. Creación y Evaluación de Modelos 🤖🧠
-
-Se construyeron dos modelos predictivos, cada uno seleccionado en base a si requieren o no normalización de los datos.
-
-#### **Modelo 1: Regresión Logística** 📈
-* **Características:** Es un modelo lineal que requiere que los datos estén en la misma escala para un rendimiento óptimo.
-* **Normalización:** Se aplicó `StandardScaler` para normalizar las características numéricas del conjunto de entrenamiento y de prueba, asegurando que el modelo no se sesgue por la magnitud de las variables.
-* **Evaluación:** Se entrenó el modelo con los datos balanceados y normalizados, y se evaluó con las siguientes métricas en el conjunto de prueba:
-    * Exactitud (`Accuracy`)
-    * Precisión (`Precision`)
-    * Recall (`Recall`)
-    * F1-score
-    * Matriz de Confusión
-
-#### **Modelo 2: Árbol de Decisión** 🌳
-* **Características:** Este modelo basado en árboles no es sensible a la escala de los datos, por lo que no se aplicó normalización.
-* **Evaluación:** Se entrenó el modelo con los datos balanceados (sin normalizar) y se evaluó con las mismas métricas que la Regresión Logística.
+* `TelecomX_parte2_LATAM.ipynb`: El cuaderno principal que abarca todas las etapas del proyecto, desde la carga de datos hasta la evaluación de modelos.
+* `datos_tratados.csv`: El conjunto de datos final, tratado y listo para el modelado.
 
 ---
 
-### 4. Análisis Crítico y Propuesta de Estrategias 🎯💡
+## 📝 Descripción del Proceso de Preparación de Datos
 
-* **Rendimiento de los Modelos:** Se comparó el rendimiento de ambos modelos, prestando especial atención a las métricas de la clase minoritaria (Precision, Recall y F1-score). Este análisis permitió identificar cuál de los modelos se ajusta mejor a los objetivos de negocio de la retención de clientes.
-* **Análisis de Importancia de Variables:**
-    * Para la Regresión Logística, se analizaron los **coeficientes** de las variables para entender su contribución a la predicción.
-    * Para el Árbol de Decisión, se utilizaron las **importancias de las características** para identificar las variables más influyentes.
-* **Factores Clave y Estrategias de Retención:** Se elaboró un informe detallado que identifica los factores de mayor riesgo de churn y se propusieron estrategias de retención específicas para mitigar estos riesgos. Los factores principales incluyen la baja antigüedad, los contratos mes a mes y la falta de servicios de soporte.
+### 1. Clasificación de Variables 🏷️
+* **Variables Categóricas:** Variables como `gender`, `multiplelines`, `internetservice` y `paymentmethod` fueron tratadas mediante **codificación One-Hot** para convertirlas en un formato numérico (0 y 1). Esto es esencial para que los modelos de Machine Learning puedan procesar esta información.
+* **Variables Numéricas:** Variables como `tenure`, `charges.monthly` y `charges.total` se mantuvieron en su formato numérico original.
 
-Este proyecto ha proporcionado un marco robusto para entender y predecir el comportamiento de churn, ofreciendo a la empresa herramientas valiosas para tomar decisiones informadas y mejorar la lealtad de sus clientes.
+### 2. Normalización y Codificación 🛠️
+* **Normalización:** Para el modelo de Regresión Logística, se aplicó la normalización (`StandardScaler`) a las variables numéricas continuas. Esta etapa es crucial porque asegura que todas las características tengan la misma escala, evitando que variables con rangos de valores grandes (ej. `charges.total`) dominen el proceso de optimización del modelo.
+* **Separación de Datos:** El conjunto de datos se dividió en un **70% para entrenamiento** y un **30% para prueba**. Se utilizó el parámetro `stratify=y` para asegurar que la proporción de clientes que cancelan (churn) fuera la misma en ambos conjuntos, lo cual es vital en un dataset desbalanceado.
+
+---
+
+## 🧠 Justificaciones de las Decisiones de Modelado
+
+* **Manejo del Desbalance de Clases:** El conjunto de datos original estaba severamente desbalanceado. Para abordar esto, se optó por el método de **undersampling NearMiss** en el conjunto de entrenamiento. Esta técnica se enfoca en las muestras de la clase mayoritaria que están más cerca de las de la clase minoritaria, lo que ayuda a que el modelo aprenda a diferenciar entre las clases en las zonas de riesgo.
+* **Selección de Modelos:** Se eligieron dos modelos con diferentes sensibilidades a la escala de los datos para comparar su rendimiento:
+    * **Regresión Logística:** Requiere normalización, lo que nos permitió evaluar cómo la estandarización afecta el desempeño del modelo.
+    * **Árbol de Decisión:** No requiere normalización, lo que lo hace un modelo robusto y fácil de interpretar en su forma original.
+* **Evaluación de Métricas:** En lugar de centrarnos solo en la exactitud (`accuracy`), se priorizaron métricas como **Precisión**, **Recall** y **F1-score**, especialmente para la clase minoritaria (`churn`). Esto se debe a que un alto `accuracy` puede ser engañoso en un dataset desbalanceado, mientras que el `recall` mide la capacidad del modelo para detectar a todos los clientes que realmente cancelan, lo cual es de gran importancia para el negocio.
+
+---
+
+## 📈 Ejemplos de Gráficos e Insights
+
+
+**Matriz de Correlación:** Muestra la fuerte correlación negativa entre `tenure` (antigüedad) y `churn`.
+
+
+**Boxplot de Antigüedad vs. Churn:** Este gráfico visualiza que los clientes que cancelan tienen una antigüedad promedio significativamente más baja que aquellos que no.
+
+
+**Gráfico de Dispersión:** Muestra que los clientes que cancelan (`churn=1`) tienden a agruparse en la parte inferior izquierda, correspondiente a una baja antigüedad y un menor gasto total.
+
+---
+
+## ⚙️ Instrucciones para Ejecutar el Cuaderno
+
+Para ejecutar el análisis completo, sigue estos pasos:
+
+1.  **Instalar Bibliotecas:** Asegúrate de tener las siguientes bibliotecas instaladas. Puedes hacerlo con `pip`:
+    ```bash
+    pip install pandas numpy scikit-learn seaborn matplotlib imbalanced-learn
+    ```
+2.  **Cargar los Datos:** Asegúrate de que el archivo `datos_tratados.csv` se encuentre en la raíz del repositorio.
+3.  **Ejecutar el Cuaderno:** Abre el archivo `TelecomX_parte2_LATAM.ipynb` ubicado en la raíz del repositorio y ejecutalo con Google Colab. A continuación, ejecuta cada celda en orden.
+
+¡Con esto, podrás replicar el análisis y obtener todos los insights del proyecto!
